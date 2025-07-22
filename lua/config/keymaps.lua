@@ -10,3 +10,21 @@ end, {})
 
 -- Keymap para o comando
 vim.keymap.set("n", "<leader>cp", "<cmd>CopyFilePath<CR>", { desc = "Copy File Path in Buffer" })
+
+-- ============================================================================
+-- PLUGIN KEYBINDINGS REFERENCE
+-- ============================================================================
+--
+-- FLASH.NVIM (Navegação Inteligente):
+-- • S       = Flash Treesitter (navegação semântica no normal/visual)
+-- • s       = Flash jump (pular para label)
+-- • /       = Flash search (busca com labels)
+--
+-- NVIM-SURROUND (Texto entre delimitadores):
+-- • ys{motion}{char} = adicionar surround (ex: ysiw" = aspas na palavra)
+-- • ds{char}         = deletar surround (ex: ds" = remover aspas)
+-- • cs{old}{new}     = mudar surround (ex: cs"' = aspas duplas → simples)
+-- • gs               = adicionar surround no VISUAL (mudança: era "S")
+-- • gS               = adicionar surround linha no VISUAL
+--
+-- NOTA: Mudamos surround de "S" → "gs" para evitar conflito com Flash!

@@ -11,7 +11,9 @@ return {
         normal_cur = "yss",
         normal_line = "yS",
         normal_cur_line = "ySS",
-        visual = "S",
+        -- Mudança: "S" → "gs" para evitar conflito com Flash.nvim
+        -- Flash.nvim usa "S" para navegação Treesitter no modo visual
+        visual = "gs",
         visual_line = "gS",
         delete = "ds",
         change = "cs",
