@@ -5,7 +5,7 @@
 -- Comando para copiar o caminho completo do arquivo atual
 vim.api.nvim_create_user_command("CopyFilePath", function()
   vim.fn.setreg("+", vim.fn.expand("%:p"))
-  print("File Path Copied" .. vim.fn.expand("%:p"))
+  print("File Path Copied " .. vim.fn.expand("%:p"))
 end, {})
 
 -- Keymap para o comando
@@ -27,4 +27,11 @@ vim.keymap.set("n", "<leader>cp", "<cmd>CopyFilePath<CR>", { desc = "Copy File P
 -- • gs               = adicionar surround no VISUAL (mudança: era "S")
 -- • gS               = adicionar surround linha no VISUAL
 --
+-- DIAGNOSTICS & LSP:
+-- • ]d / [d         = próximo/anterior diagnostic
+-- • ]e / [e         = próximo/anterior error
+-- • ]w / [w         = próximo/anterior warning
+-- • <leader>cd      = mostrar diagnostic em float
+--
 -- NOTA: Mudamos surround de "S" → "gs" para evitar conflito com Flash!
+-- NOTA: Removido ponto branco dos Info diagnostics para interface mais limpa
