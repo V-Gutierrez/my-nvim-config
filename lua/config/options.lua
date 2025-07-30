@@ -28,3 +28,10 @@ for type, icon in pairs(signs) do
   local hl = "DiagnosticSign" .. type
   vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
 end
+
+-- Hide whitespace characters (disable list mode)
+vim.opt.list = false
+vim.opt.listchars = ""
+
+-- Faster diagnostic updates
+vim.opt.updatetime = 300
