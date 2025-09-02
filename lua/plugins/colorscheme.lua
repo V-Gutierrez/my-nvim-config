@@ -1,50 +1,25 @@
 return {
-    {
-        "LazyVim/LazyVim",
-        opts = {
-            colorscheme = function()
-                require("catppuccin").load()
-            end,
-        },
+  {
+    "LazyVim/LazyVim",
+    opts = {
+      colorscheme = function()
+        vim.cmd.colorscheme("tokyonight-night")
+      end,
     },
-    {
-        "catppuccin/nvim",
-        name = "catppuccin",
-        priority = 1000,
-        opts = {
-            no_italic = true,
-            term_colors = true,
-            transparent_background = false,
-            styles = {
-                comments = {},
-                conditionals = {},
-                loops = {},
-                functions = {},
-                keywords = {},
-                strings = {},
-                variables = {},
-                numbers = {},
-                booleans = {},
-                properties = {},
-                types = {},
-            },
-            color_overrides = {
-                mocha = {
-                    base = "#000000",
-                    mantle = "#000000",
-                    crust = "#000000",
-                },
-            },
-            integrations = {
-                telescope = {
-                    enabled = true,
-                    style = "nvchad",
-                },
-                dropbar = {
-                    enabled = true,
-                    color_mode = true,
-                },
-            },
-        },
+  },
+  {
+    "folke/tokyonight.nvim",
+    priority = 1000,
+    opts = {
+      style = "night",
+      transparent = false,
+      terminal_colors = true,
+      styles = {
+        comments = { italic = false },
+        keywords = { italic = false },
+        functions = {},
+        variables = {},
+      },
     },
+  },
 }

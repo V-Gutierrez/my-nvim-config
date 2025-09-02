@@ -27,7 +27,7 @@ return {
       vim.api.nvim_create_autocmd({ "CursorHold" }, {
         group = vim.api.nvim_create_augroup("auto_diagnostic", { clear = true }),
         callback = function()
-          vim.diagnostic.open_float(nil, { 
+          vim.diagnostic.open_float(nil, {
             focus = false,
             scope = "cursor",
           })
@@ -35,97 +35,23 @@ return {
       })
 
       -- Tempo mais rápido para mostrar diagnósticos
-      vim.opt.updatetime = 300
+      vim.opt.updatetime = 100
     end,
   },
 
-  -- Configuração universal de linting
+  -- Plugin nvim-lint para linting adicional
   {
     "mfussenegger/nvim-lint",
-    event = { "BufReadPre", "BufNewFile" },
     config = function()
       local lint = require("lint")
 
-      -- Configurar linters para todas as linguagens suportadas
-      lint.linters_by_ft = {
-        -- JavaScript/TypeScript
-        javascript = { "eslint_d", "eslint" },
-        typescript = { "eslint_d", "eslint" },
-        javascriptreact = { "eslint_d", "eslint" },
-        typescriptreact = { "eslint_d", "eslint" },
-        vue = { "eslint_d", "eslint" },
-        svelte = { "eslint_d", "eslint" },
-        astro = { "eslint_d", "eslint" },
-        
-        -- Python
-        python = { "ruff", "flake8", "pylint" },
-        
-        -- Lua
-        lua = { "luacheck" },
-        
-        -- Shell
-        bash = { "shellcheck" },
-        sh = { "shellcheck" },
-        zsh = { "shellcheck" },
-        
-        -- Go
-        go = { "golangcilint", "revive" },
-        
-        -- Rust
-        rust = { "clippy" },
-        
-        -- C/C++
-        c = { "cppcheck", "cpplint" },
-        cpp = { "cppcheck", "cpplint" },
-        
-        -- Java
-        java = { "checkstyle" },
-        
-        -- PHP
-        php = { "phpcs", "psalm" },
-        
-        -- Ruby
-        ruby = { "rubocop" },
-        
-        -- Docker
-        dockerfile = { "hadolint" },
-        
-        -- YAML
-        yaml = { "yamllint" },
-        yml = { "yamllint" },
-        
-        -- JSON
-        json = { "jsonlint" },
-        
-        -- Markdown
-        markdown = { "markdownlint" },
-        
-        -- CSS/SCSS
-        css = { "stylelint" },
-        scss = { "stylelint" },
-        
-        -- HTML
-        html = { "htmlhint" },
-        
-        -- Terraform
-        terraform = { "tflint" },
-        tf = { "tflint" },
-        
-        -- Ansible
-        ansible = { "ansible-lint" },
-        
-        -- SQL
-        sql = { "sqlfluff" },
-      }
-
-      -- Função para executar lint automaticamente
       local lint_augroup = vim.api.nvim_create_augroup("lint", { clear = true })
-      
-      vim.api.nvim_create_autocmd({ 
-        "BufEnter", 
-        "BufWritePost", 
+
+      vim.api.nvim_create_autocmd({
+        "BufEnter",
+        "BufWritePost",
         "InsertLeave",
-        "TextChanged"
+        "TextChanged",
       }, {
         group = lint_augroup,
         callback = function()
@@ -146,7 +72,7 @@ return {
       -- Desabilitar list mode para ocultar pontos de espaço
       vim.opt.list = false
       vim.opt.listchars = ""
-      
+
       -- Se você quiser mostrar apenas alguns caracteres específicos, descomente e ajuste:
       -- vim.opt.list = true
       -- vim.opt.listchars = { tab = "→ ", trail = "·", nbsp = "␣" }
