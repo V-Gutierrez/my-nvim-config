@@ -1,0 +1,20 @@
+Flash.nvim Test File
+
+This is a test file to verify Flash.nvim functionality.
+You can use the following commands:
+
+- Press 's' in normal mode to activate Flash jump mode
+- Press 'S' in normal mode to activate Flash Treesitter mode
+- Press '/' to search and use Flash labels
+- In visual mode, 'S' will also activate Treesitter mode
+
+Try pressing 'S' when your cursor is on any word or syntax element.
+You should see labels appear on different syntax nodes that you can jump to.
+
+Example code for testing:
+function testFunction() {
+  const variable = "test string";
+  if (variable.length > 0) {
+    console.log("Flash is working!");
+  }
+}
