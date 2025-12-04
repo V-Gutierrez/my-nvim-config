@@ -142,12 +142,15 @@ return {
       -- options used for treesitter selections
       treesitter = {
         labels = "abcdefghijklmnopqrstuvwxyz",
-        jump = { pos = "range" },
+        jump = {
+          pos = "range",
+          autojump = false,  -- Critical: prevents auto-selection of smallest node
+        },
         search = { incremental = false },
         label = { before = true, after = true, style = "inline" },
         highlight = {
-          backdrop = false,
-          matches = false,
+          backdrop = true,   -- Enable backdrop for better visualization
+          matches = true,    -- Enable match highlighting to see syntax nodes
         },
       },
       treesitter_search = {
