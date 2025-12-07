@@ -145,6 +145,16 @@ vim.api.nvim_create_autocmd("ColorScheme", {
   end,
 })
 
+-- Yank visual feedback (highlight yanked text briefly)
+vim.api.nvim_create_autocmd("TextYankPost", {
+  callback = function()
+    vim.highlight.on_yank({
+      higroup = "IncSearch",
+      timeout = 200,
+    })
+  end,
+})
+
 -- 6. Keymaps custom
 vim.api.nvim_create_user_command("CopyFilePath", function()
   vim.fn.setreg("+", vim.fn.expand("%:p"))
@@ -156,13 +166,17 @@ vim.keymap.set("n", "<leader>cp", "<cmd>CopyFilePath<CR>", { desc = "Copy File P
 -- ============================================================================
 -- 7. KEYMAPS: LazyVim → VSCode Equivalents
 -- ============================================================================
--- Total: 28 keymaps mapeados do LazyVim para comandos equivalentes do VSCode
+-- Total: 26 keymaps mapeados do LazyVim para comandos equivalentes do VSCode
 --
--- NOTA: Labels visuais do Flash.nvim NÃO existem no VSCode
--- Os bindings s/f/t abrirão busca nativa em vez de labels interativas
+-- NOTA: f/t/F/T agora usam motions nativos do Vim (vf, vt, yf, yt funcionam!)
+-- Use 's' para busca rápida no VSCode em vez de f/t
 
 -- Flash Navigation → VSCode Search/Navigation (7 keymaps)
 vim.keymap.set("n", "s", function()
+  vim.fn.VSCodeNotify("actions.find")
+end, { desc = "Forward Search (Flash alternative)" })
+
+vim.keymap.set("n", "/", function()
   vim.fn.VSCodeNotify("actions.find")
 end, { desc = "Forward Search (Flash alternative)" })
 
@@ -178,24 +192,13 @@ vim.keymap.set("n", "R", function()
   vim.fn.VSCodeNotify("workbench.action.showAllSymbols")
 end, { desc = "Go to Symbol in Workspace (Treesitter Search)" })
 
--- Flash char motions (f/t with visual labels) → VSCode Find (5 keymaps)
-vim.keymap.set("n", "f", function()
-  vim.fn.VSCodeNotify("actions.find")
-end, { desc = "Find Forward (Flash char)" })
-
-vim.keymap.set("n", "F", function()
-  vim.fn.VSCodeNotify("actions.findWithSelection")
-end, { desc = "Find Backward" })
-
-vim.keymap.set("n", "t", function()
-  vim.fn.VSCodeNotify("actions.find")
-end, { desc = "Till Forward" })
-
-vim.keymap.set("n", "T", function()
-  vim.fn.VSCodeNotify("actions.findWithSelection")
-end, { desc = "Till Backward" })
+-- Flash char motions → Native Vim motions (f/t/F/T work in visual mode)
+-- NOTA: Removidos mappings de f/t/F/T para permitir uso nativo em visual mode
+-- Agora vf/vt/vF/vT funcionam corretamente como motions do Vim
+-- Use 's' para busca rápida se precisar de find do VSCode
 
 -- Note: 'e' (end of word) is native Vim motion, works automatically
+-- Note: 'f/t/F/T' agora são motions nativos do Vim (funcionam com v/y/d/c)
 
 vim.keymap.set("n", ";", function()
   vim.fn.VSCodeNotify("editor.action.nextMatchFindAction")
@@ -263,6 +266,15 @@ end, { desc = "Next Error" })
 vim.keymap.set("n", "[e", function()
   vim.fn.VSCodeNotify("editor.action.marker.prevInFiles")
 end, { desc = "Previous Error" })
+
+-- LSP Navigation → Code Navigation (2 keymaps)
+vim.keymap.set("n", "gd", function()
+  vim.fn.VSCodeNotify("editor.action.revealDefinition")
+end, { desc = "Go to Definition" })
+
+vim.keymap.set("n", "gr", function()
+  vim.fn.VSCodeNotify("editor.action.goToReferences")
+end, { desc = "Go to References (Peek View)" })
 
 -- Git Commands (1 keymap)
 vim.keymap.set("n", "<leader>gg", function()

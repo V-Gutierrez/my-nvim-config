@@ -20,14 +20,17 @@ Todos os keymaps funcionando:
 ### 2. Diagnostic styling
 Ícones e cores de LSP diagnostics configurados
 
-### 3. Keymaps LazyVim → VSCode
-**Total: 28 keymaps** mapeados do seu LazyVim para comandos equivalentes do VSCode
+### 3. Yank visual feedback
+Highlight amarelo (200ms) quando você copia texto com `y`, `yf`, `yw`, etc.
+
+### 4. Keymaps LazyVim → VSCode
+**Total: 26 keymaps** mapeados do seu LazyVim para comandos equivalentes do VSCode
 
 ---
 
 ## 🎯 Referência Completa de Keymaps
 
-### Flash Navigation → VSCode Search (12 keymaps)
+### Flash Navigation → VSCode Search (8 keymaps)
 
 | Keymap | LazyVim Action | VSCode Command | Descrição |
 |--------|----------------|----------------|-----------|
@@ -35,15 +38,15 @@ Todos os keymaps funcionando:
 | `S` | Flash Treesitter | `workbench.action.gotoSymbol` | Navegação por símbolos/funções |
 | `r` | Remote Flash | `workbench.action.quickOpen` | Quick Open (Cmd+P) |
 | `R` | Treesitter Search | `workbench.action.showAllSymbols` | Símbolos no workspace |
-| `f` | Flash char | `actions.find` | Busca forward (abre find) |
-| `F` | Flash char backward | `actions.findWithSelection` | Busca backward |
-| `t` | Flash till | `actions.find` | Busca till (abre find) |
-| `T` | Flash till backward | `actions.findWithSelection` | Busca till backward |
+| `f/t/F/T` | Flash char motions | *Native Vim* | **Agora usam motions nativos!** vf, vt, yf, yt funcionam |
 | `e` | End of word | *Native Vim* | Motion nativo (já funciona) |
 | `;` | Repeat f/t | `editor.action.nextMatchFindAction` | Próxima ocorrência |
 | `,` | Repeat f/t reverse | `editor.action.previousMatchFindAction` | Ocorrência anterior |
 
-⚠️ **IMPORTANTE**: Os bindings `s`, `f`, `t` **não têm labels visuais** do Flash.nvim. Eles abrirão a busca nativa do VSCode (`Cmd+F`) em vez de mostrar labels interativas.
+✅ **MELHORIAS**:
+- `f/t/F/T` agora são motions nativos do Vim - **`vf`, `vt`, `yf`, `yt` funcionam perfeitamente!**
+- Yank feedback visual (highlight amarelo 200ms) em todas operações de cópia
+- Use `s` para busca rápida no VSCode se precisar
 
 ### Window Navigation → Editor Groups (6 keymaps)
 
@@ -74,6 +77,13 @@ Todos os keymaps funcionando:
 | `]e` | Next error | `editor.action.marker.nextInFiles` | Próximo erro |
 | `[e` | Previous error | `editor.action.marker.prevInFiles` | Erro anterior |
 
+### LSP Navigation → Code Navigation (2 keymaps)
+
+| Keymap | LazyVim Action | VSCode Command | Descrição |
+|--------|----------------|----------------|-----------|
+| `gd` | Go to Definition | `editor.action.revealDefinition` | Ir para definição do símbolo |
+| `gr` | Go to References | `editor.action.findReferences` | Ver referências em peek view inline (Shift+F12) |
+
 ### Git & Custom (2 keymaps)
 
 | Keymap | LazyVim Action | VSCode Command | Descrição |
@@ -87,23 +97,22 @@ Todos os keymaps funcionando:
 
 ### Flash.nvim Labels Visuais
 
-**O que você tinha no LazyVim:**
-- Apertar `f` → Labels aparecem em todos os caracteres visíveis (`a`, `b`, `c`, etc.)
-- Digitar o label → Cursor pula instantaneamente
+**O que mudou:**
+- ✅ **`f/t/F/T` agora funcionam como motions nativos do Vim** (vf, vt, yf, yt, df, dt, etc.)
+- ❌ **Sem labels visuais do Flash.nvim** (limitação da extensão VSCode Neovim)
+- ✅ **Yank feedback visual** - Highlight amarelo (200ms) ao copiar texto
 
-**O que você tem agora no VSCode:**
-- Apertar `f` → Abre busca nativa do VSCode (`Cmd+F`)
-- Digitar caractere → Busca incremental (sem labels)
-- `Enter` ou `Esc` → Sai da busca
+**Como usar agora:**
+1. **Motions com f/t (funcionam!):**
+   - `vf"` - seleciona até aspas (inclusive)
+   - `vt"` - seleciona até aspas (exclusive)
+   - `yf)` - copia até parêntese (com highlight feedback!)
+   - `df,` - deleta até vírgula
 
-**Alternativas sugeridas:**
-1. **Usar VSCode native shortcuts diretamente** - Pode ser mais rápido:
-   - `Cmd+F` - Find
-   - `Cmd+P` - Quick Open
-   - `Cmd+Shift+O` - Go to Symbol
-   - `Cmd+T` - Go to Symbol in Workspace
-
-2. **Treinar muscle memory** - Usar comandos VSCode em vez de Vim motions no contexto do VSCode
+2. **Busca rápida (sem motion):**
+   - `s` - Abre VSCode find (use em vez de f/t para busca pura)
+   - `S` - Go to Symbol (navegação semântica)
+   - `Cmd+F` - Find nativo do VSCode
 
 ### Navegação de Janelas
 
@@ -124,6 +133,8 @@ VSCode usa "Editor Groups" (diferente de windows do Vim). Os keymaps `<C-h/j/k/l
 3. **Testar keymaps principais**:
    - `s` → Deve abrir busca (Find)
    - `S` → Deve abrir Go to Symbol
+   - `gd` → Ir para definição do símbolo
+   - `gr` → Ver referências do símbolo
    - `ysiw"` → Deve adicionar aspas na palavra
    - `<C-h/j/k/l>` → Deve navegar entre editor groups
    - `<leader>bn` → Próximo editor
@@ -220,14 +231,15 @@ Além dos keymaps Vim mapeados, esses comandos nativos do VSCode são úteis:
 
 ### Muscle Memory LazyVim → VSCode
 
-Se você usa muito Flash no LazyVim, considere treinar esses equivalentes:
+Mudanças no comportamento:
 
-| LazyVim (Flash) | VSCode Equivalent | Como usar |
-|-----------------|-------------------|-----------|
-| `s{char}{label}` | `s` depois digite | Abre find, digite caractere |
+| LazyVim (Flash) | VSCode Neovim | Como usar |
+|-----------------|---------------|-----------|
+| `s{char}{label}` | `s` abre find | Abre find, digite padrão de busca |
 | `S` (Treesitter) | `S` | **Funciona igual!** Go to Symbol |
-| `f{char}` | `f` depois digite | Abre find, digite caractere |
-| `/pattern` | `Cmd+F` | Busca nativa - use diretamente |
+| `f{char}` (motion) | `f{char}` | **Funciona como motion nativo!** vf, yf, df, etc. |
+| `t{char}` (motion) | `t{char}` | **Funciona como motion nativo!** vt, yt, dt, etc. |
+| `/pattern` | `Cmd+F` ou `s` | Busca nativa VSCode ou `s` |
 
 ---
 
