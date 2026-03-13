@@ -1,51 +1,34 @@
 -- ~/.config/nvim/lua/plugins/surround.lua
+-- nvim-surround v4: keymaps via <Plug> mappings, not setup()
 return {
   "kylechui/nvim-surround",
   event = "VeryLazy",
+  init = function()
+    -- Disable default visual mappings (we remap to gs/gS to avoid Flash.nvim conflict)
+    vim.g.nvim_surround_no_visual_mappings = true
+  end,
+  keys = {
+    -- Visual mode: "gs" instead of "S" (Flash.nvim uses "S" for Treesitter nav)
+    { "gs", "<Plug>(nvim-surround-visual)", mode = "x", desc = "Surround (visual)" },
+    { "gS", "<Plug>(nvim-surround-visual-line)", mode = "x", desc = "Surround line (visual)" },
+  },
   config = function()
     require("nvim-surround").setup({
-      keymaps = {
-        insert = "<C-g>s",
-        insert_line = "<C-g>S",
-        normal = "ys",
-        normal_cur = "yss",
-        normal_line = "yS",
-        normal_cur_line = "ySS",
-        -- Mudança: "S" → "gs" para evitar conflito com Flash.nvim
-        -- Flash.nvim usa "S" para navegação Treesitter no modo visual
-        visual = "gs",
-        visual_line = "gS",
-        delete = "ds",
-        change = "cs",
-        change_line = "cS",
-      },
       surrounds = {
-        -- Configurações mais intuitivas para aspas
         ["'"] = {
           add = { "'", "'" },
-          find = function()
-            return M.get_selection({ motion = "a'" })
-          end,
-          delete = "^(.)().-(.)()$",
         },
         ['"'] = {
           add = { '"', '"' },
-          find = function()
-            return M.get_selection({ motion = 'a"' })
-          end,
-          delete = "^(.)().-(.)()$",
         },
-        -- Facilitar uso com HTML/XML tags
+        -- HTML/XML tags
         ["t"] = {
           add = function()
-            local config = require("nvim-surround.config")
-            local result = config.get_input("Tag: ")
-            if result then
+            local result = vim.fn.input("Tag: ")
+            if result ~= "" then
               return { { "<" .. result .. ">" }, { "</" .. result:match("^%S+") .. ">" } }
             end
           end,
-          find = "<[^<>]*>.-</%w*>",
-          delete = "^(<[^<>]*>)().-(</%w*>)()$",
         },
         -- Markdown code blocks
         ["c"] = {
