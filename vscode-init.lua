@@ -282,3 +282,4 @@ vim.keymap.set("n", "<leader>gg", function()
 end, { desc = "Git View (LazyGit alternative)" })
 
 -- NOTA: gs e gS continuam sendo usados pelo nvim-surround no visual mode
+
