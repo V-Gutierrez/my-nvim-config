@@ -3,12 +3,10 @@
 return {
   "kylechui/nvim-surround",
   event = "VeryLazy",
-  init = function()
-    -- Disable default visual mappings (we remap to gs/gS to avoid Flash.nvim conflict)
-    vim.g.nvim_surround_no_visual_mappings = true
-  end,
   keys = {
-    -- Visual mode: "gs" instead of "S" (Flash.nvim uses "S" for Treesitter nav)
+    -- Disable default "S" (Flash.nvim uses it for Treesitter nav)
+    { "S", false, mode = "x" },
+    -- Remap to gs/gS
     { "gs", "<Plug>(nvim-surround-visual)", mode = "x", desc = "Surround (visual)" },
     { "gS", "<Plug>(nvim-surround-visual-line)", mode = "x", desc = "Surround line (visual)" },
   },

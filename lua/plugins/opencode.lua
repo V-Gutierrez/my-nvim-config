@@ -11,6 +11,6 @@ return {
     local oc = require("opencode")
     vim.keymap.set({ "n", "x" }, "<leader>oa", function() oc.ask() end, { desc = "OpenCode ask" })
     vim.keymap.set({ "n", "x" }, "<leader>os", function() oc.select() end, { desc = "OpenCode select" })
-    vim.keymap.set({ "n", "x" }, "<leader>ot", function() oc.toggle() end, { desc = "OpenCode TUI" })
+    vim.keymap.set({ "n", "x" }, "<leader>oc", function() oc.toggle() end, { desc = "OpenCode TUI" })
   end,
 }

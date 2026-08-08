@@ -81,7 +81,7 @@ return {
 
   -- Melhorar a exibição de erros com cores mais visíveis
   {
-    "folke/tokyonight.nvim",
+    "rebelot/kanagawa.nvim",
     opts = function()
       -- Configurar cores de diagnóstico mais visíveis
       vim.api.nvim_create_autocmd("ColorScheme", {

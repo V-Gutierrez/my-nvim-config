@@ -9,7 +9,7 @@ vim.api.nvim_create_user_command("CopyFilePath", function()
 end, {})
 
 -- Keymap para o comando
-vim.keymap.set("n", "<leader>cp", "<cmd>CopyFilePath<CR>", { desc = "Copy File Path in Buffer" })
+vim.keymap.set("n", "<leader>cP", "<cmd>CopyFilePath<CR>", { desc = "Copy File Path in Buffer" })
 
 -- ============================================================================
 -- PLUGIN KEYBINDINGS REFERENCE

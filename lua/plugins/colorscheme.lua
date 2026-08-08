@@ -3,22 +3,28 @@ return {
     "LazyVim/LazyVim",
     opts = {
       colorscheme = function()
-        vim.cmd.colorscheme("tokyonight-night")
+        vim.cmd.colorscheme("kanagawa-dragon")
       end,
     },
   },
   {
-    "folke/tokyonight.nvim",
+    "rebelot/kanagawa.nvim",
     priority = 1000,
     opts = {
-      style = "night",
+      theme = "dragon",
       transparent = false,
-      terminal_colors = true,
-      styles = {
-        comments = { italic = false },
-        keywords = { italic = false },
-        functions = {},
-        variables = {},
+      terminalColors = true,
+      commentStyle = { italic = false },
+      keywordStyle = { italic = false },
+      statementStyle = { bold = true },
+      colors = {
+        theme = {
+          dragon = {
+            ui = {
+              bg = "#181616",
+            },
+          },
+        },
       },
     },
   },

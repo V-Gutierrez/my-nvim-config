@@ -24,54 +24,14 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 -- 3. Carregar nvim-surround
+-- v4: keymaps are set automatically (ys/ds/cs/gs). Only custom surrounds go in setup.
 require("lazy").setup({
   {
     "kylechui/nvim-surround",
     event = "VeryLazy",
     config = function()
-      local M = require("nvim-surround.config")
       require("nvim-surround").setup({
-        keymaps = {
-          insert = "<C-g>s",
-          insert_line = "<C-g>S",
-          normal = "ys",
-          normal_cur = "yss",
-          normal_line = "yS",
-          normal_cur_line = "ySS",
-          visual = "gs",
-          visual_line = "gS",
-          delete = "ds",
-          change = "cs",
-          change_line = "cS",
-        },
         surrounds = {
-          -- Configurações mais intuitivas para aspas
-          ["'"] = {
-            add = { "'", "'" },
-            find = function()
-              return M.get_selection({ motion = "a'" })
-            end,
-            delete = "^(.)().-(.)()$",
-          },
-          ['"'] = {
-            add = { '"', '"' },
-            find = function()
-              return M.get_selection({ motion = 'a"' })
-            end,
-            delete = "^(.)().-(.)()$",
-          },
-          -- Facilitar uso com HTML/XML tags
-          ["t"] = {
-            add = function()
-              local config = require("nvim-surround.config")
-              local result = config.get_input("Tag: ")
-              if result then
-                return { { "<" .. result .. ">" }, { "</" .. result:match("^%S+") .. ">" } }
-              end
-            end,
-            find = "<[^<>]*>.-</%w*>",
-            delete = "^(<[^<>]*>)().-(</%w*>)()$",
-          },
           -- Markdown code blocks
           ["c"] = {
             add = { "```", "```" },
